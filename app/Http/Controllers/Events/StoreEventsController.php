@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Events;
+use Webpatser\Uuid\Uuid;
 use GuzzleHttp\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,9 +10,12 @@ class StoreEventsController extends Controller
 {
     public function __invoke(Request $request)
     {
+
+
+
         $data = [
-            "pk" => "Event#e05ea7bc-b093-412d-8121-1379315b93e4",
-            "sk" => "METADATE#EVENT",
+            "pk" => "Event#".Uuid::generate(),
+            "sk" => "METADATA#EVENT",
             "capacity" => strval($request->input('capacity')),
             "date" => strval($request->input('date')),
             "hour" => strval($request->input('hour')),
@@ -26,6 +30,6 @@ class StoreEventsController extends Controller
             'json' => $data,
         ]);
 
-        return back();
+        return redirect()->route('events.index')->with('eventRegistered', 'Evento registrado');
     }
 }

@@ -1,7 +1,12 @@
 @extends('layouts.dashboard')
 @section('content')
-    <div class="row mt-4">
-    </div>
+
+    @if(Session::has('eventRegistered'))
+        <div class="alert alert-success" role="alert">
+            <p class="text-center text-white">{{ Session::get('eventRegistered') }}</p>
+        </div>
+    @endif
+
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
@@ -23,6 +28,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($events as $event)
+                                        <tr class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <td>{{$event['name']}}</td>
+                                            <td>{{$event['date'].' '.$event['hour']}}</td>
+                                            <td>{{$event['capacity'].' personas'}}</td>
+                                            <td></td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
