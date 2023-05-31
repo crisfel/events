@@ -24,5 +24,6 @@ Route::group(['middleware' => ['auth']], static function() {
     Route::get('/events', App\Http\Controllers\Events\IndexEventsController::class)->name('events.index');
     Route::get('/events-create', App\Http\Controllers\Events\CreateEventsController::class)->name('events.create');
     Route::post('/events-store', App\Http\Controllers\Events\StoreEventsController::class)->name('events.store');
+    Route::post('/events-cancel', App\Http\Controllers\Events\CancelEventsController::class)->name('events.cancel');
 
 });

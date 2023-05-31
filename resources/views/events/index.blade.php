@@ -6,7 +6,6 @@
             <p class="text-center text-white">{{ Session::get('eventRegistered') }}</p>
         </div>
     @endif
-
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
@@ -24,6 +23,7 @@
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Capacidad</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estatus</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acción</th>
                                 </tr>
                                 </thead>
@@ -33,16 +33,46 @@
                                             <td>{{$event['name']}}</td>
                                             <td>{{$event['date'].' '.$event['hour']}}</td>
                                             <td>{{$event['capacity'].' personas'}}</td>
-                                            <td></td>
+                                            <td>
+                                                @if ($event['status'] == 'enabled')
+                                                    <p style="font-weight:bold;" class="text-success">Habilitado</p>
+                                                @elseif ($event['status'] == 'cancelled')
+                                                    <p style="font-weight:bold;" class="text-danger">Cancelado</p>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($event['status'] != 'cancelled')
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="d-inline">
+                                                        <a style="color: darkred;" href="#" title="Cancelar" class="btn btn-link px-1 mb-0" onclick="sendForm('{{$event['pk']}}', '{{$event['sk']}}')"><i style="color: darkred; font-size: 25px !important;" class="material-icons opacity-10">block</i></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <form id="cancel-form" method="post" action="{{route('events.cancel')}}">
+                                @csrf
+                                <input type="hidden" name="pk" id="pk">
+                                <input type="hidden" name="sk" id="sk">
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <script type="text/javascript">
+        function sendForm(pk, sk)
+        {
+            var form = document.getElementById('cancel-form');
+            var pkElement = document.getElementById('pk');
+            var skElement = document.getElementById('sk');
+            pkElement.value = pk;
+            skElement.value = sk;
+            form.submit();
+        }
+    </script>
 @endsection

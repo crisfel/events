@@ -11,8 +11,7 @@ class IndexEventsController extends Controller
     public function __invoke()
     {
         $client = new Client();
-
-        $response = $client->get('https://yyjiw2lpie.execute-api.us-east-1.amazonaws.com/dev/v1');
+        $response = $client->get(getenv('URL_SHOW_EVENTS'));
 
         $events = json_decode($response->getBody(), true);
 
