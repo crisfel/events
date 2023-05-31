@@ -11,7 +11,7 @@ class IndexEventsController extends Controller
     public function __invoke()
     {
         $client = new Client();
-        $response = $client->get(getenv('URL_SHOW_EVENTS'));
+        $response = $client->get(strval(getenv('URL_SHOW_EVENTS')));
 
         $events = json_decode($response->getBody(), true);
 

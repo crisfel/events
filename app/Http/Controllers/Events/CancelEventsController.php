@@ -19,7 +19,7 @@ class CancelEventsController extends Controller
 
         $client = new Client();
 
-        $client->post(getenv('URL_CANCEL_EVENTS'), [
+        $client->post(strval(getenv('URL_CANCEL_EVENTS')), [
                 'json' => $data
         ]);
 

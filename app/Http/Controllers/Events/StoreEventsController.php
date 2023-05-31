@@ -23,7 +23,7 @@ class StoreEventsController extends Controller
         json_encode($data);
 
         $client = new Client();
-        $response = $client->post(getenv('URL_CREATE_EVENTS'), [
+        $response = $client->post(strval(getenv('URL_CREATE_EVENTS')), [
             'json' => $data,
         ]);
 
